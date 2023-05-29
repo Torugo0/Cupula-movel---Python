@@ -27,80 +27,141 @@ def hora():
 #Funções de produtos cadastro 
 
 
+def cadastrar_cultivar():
+    cultivar = input("Digite o nome da semente para cultivo: ")
+    nome_cultivar.append(cultivar)
+    return cultivar
 
 
+def cadastrar_temperatura(cultivar):
+    while True:
+        try:
+            temperatura = float(input(f"Digite a temperatura ideal do(a) {cultivar}: "))
+            temperatura_ideal.append(temperatura) 
+            break
+        except ValueError:
+            print("ERRO: O valor informado não é um número ou contem valores errados (EX: 20)\n")
+
+
+def cadastrar_luz():
+    print("\n")
+    while True:    
+        try:
+            print("Quantidade de luz: ")
+            print("1- Baixa")
+            print("2- Média")
+            print("3- Alta \n")
+            luz = int(input("Escolha uma das opções: "))
+            if (luz < 1 or luz > 3):
+                raise VerificaError
+            print("\n")
+
+            if (luz == 1):
+                luz = "Baixa"
+            elif (luz == 2):
+                luz = "Média"
+            elif (luz == 3):
+                luz = "Alta"
+
+            luz_ideal.append(luz)
+            break
+        except ValueError:
+            print("ERRO: O valor informado não é um número \n")
+        except VerificaError:
+            print("ERRO: Digite apenas as opções exibidas \n")
+
+def cadastrar_agua():
+    while True:
+        try:
+            print("Quantidade de água: ")
+            print("1- Pouca")
+            print("2- Moderada")
+            print("3- Alta \n")
+            agua = int(input("Escolha uma das opções: "))
+            if (agua < 1 or agua > 3):
+                raise VerificaError
+            print("\n")
+
+            if (agua == 1):
+                agua = "Pouca"
+            elif (agua == 2):
+                agua = "Moderada"
+            elif (agua == 3):
+                agua = "Alta"
+
+            quantidade_agua.append(agua)
+            break
+        except ValueError:
+            print("ERRO: O valor informado não é um número \n")
+        except VerificaError:
+            print("ERRO: Digite apenas as opções exibidas \n")
+
+def cadastrar_tempo(cultivar):
+    while True:
+        try:
+            print(f"Tempo de desenvolvivento do(a) {cultivar}")
+            print("1- Dias")
+            print("2- Meses")
+            print("3- Anos \n")
+            tempo = int(input("Escolha uma das opções: "))
+            if (tempo < 1 or tempo > 3):
+                raise VerificaError
+            print("\n")
+
+            if tempo == 1:
+                while True:
+                    try:
+                        desenvolvimento = int(input("Quantos dia(s) serão necessários: "))
+                        print("\n")
+                        desenvolvimento = f"{desenvolvimento} dia(s)"
+                        break
+                    except ValueError:
+                        print("ERRO: O valor informado não é um número \n")
+            elif tempo == 2:
+                while True:
+                    try:
+                        desenvolvimento = int(input("Quantos meses serão necessários: "))
+                        print("\n")
+                        desenvolvimento = f"{desenvolvimento} mês(es)"
+                        break
+                    except ValueError:
+                        print("ERRO: O valor informado não é um número \n")
+            elif tempo == 3:
+                while True:
+                    try:
+                        desenvolvimento = int(input("Quantos ano(s) serão necessários: "))
+                        print("\n")
+                        desenvolvimento = f"{desenvolvimento} ano(s)"
+                        break
+                    except ValueError:
+                        print("ERRO: O valor informado não é um número \n")
+
+            tempo_desenvolvimento.append(desenvolvimento)
+            break
+        except ValueError:
+            print("ERRO: O valor informado não é um número \n")
+        except VerificaError:
+            print("ERRO: Digite apenas as opções exibidas \n")
 
 def produtoscadastro():
-    roda = True
-    while (roda):
-        cultivar = input("Digite o nome da semente para cultivo: ")
-        nome_cultivar.append(cultivar)
-
-        temperatura = float(input(f"Digite a temperatura ideal do(a) {cultivar}: "))
-        temperatura_ideal.append(temperatura) 
-        print("\n")
-
-        print("Quantidade de luz: ")
-        print("1- Baixa")
-        print("2- Média")
-        print("3- Alta")
-        luz = int(input("Escolha uma das opções: \n"))
-        print("\n")
-        if (luz == 1):
-            luz = "Baixa"
-            luz_ideal.append(luz)
-        elif (luz == 2):
-            luz = "Média"
-            luz_ideal.append(luz)
-        elif (luz == 3):
-            luz = "Alta"
-            luz_ideal.append(luz)
+    print("\n")
+    while True:
+        cultivar = cadastrar_cultivar()
+        cadastrar_temperatura(cultivar)
+        cadastrar_luz()
+        cadastrar_agua()
+        cadastrar_tempo(cultivar)
         
-        print("Quantidade de água: ")
-        print("1- Pouca")
-        print("2- Moderada")
-        print("3- Alta")
-        agua = int(input("Escolha uma das opções: \n"))
-        print("\n")
-        if (agua == 1):
-            agua = "Pouca"
-            quantidade_agua.append(agua)
-        elif (agua == 2):
-            agua = "Moderada"
-            quantidade_agua.append(agua)
-        elif (agua == 3):
-            agua = "Alta"
-            quantidade_agua.append(agua)
-        
-        print(f"Tempo de desenvolvivento do(a) {cultivar}")
-        print("1- Dias")
-        print("2- Meses")
-        print("3- Anos \n")
-        tempo = int(input("Escolha uma das opções: "))
-        print("\n")
-        if (tempo == 1):
-            desenvolvimento = int(input("Quantos dia(s) serão necessários: \n"))
-            desenvolvimento = (f"{desenvolvimento} dia(s)")
-            tempo_desenvolvimento.append(desenvolvimento)
-        elif (tempo == 2):
-            desenvolvimento = int(input("Quantos meses serão necessários: \n"))
-            desenvolvimento = (f"{desenvolvimento} mês(es)")
-            tempo_desenvolvimento.append(desenvolvimento)
-        elif (tempo == 3):
-            desenvolvimento = int(input("Quantos ano(s) serão necessários: \n"))
-            desenvolvimento = (f"{desenvolvimento} ano(s)")
         print("O produto foi cadastrado com sucesso ! \nAcesse-o(a) na opção (2- Produtos) e ative a cúpula \n")
-        roda = False
+        break
     opcoes()
 
     # Adicionar tudo que o usuario cadastrar para a cupula 
 
 #Funções de produtos
-
 def produtos():
     print("Funcionando")
     #Fazer lista de produtos adicionados, e caso não tenha nada, exibir 
-
 
 
 #Funções opções
@@ -111,7 +172,6 @@ def menu_opçoes():
     while True:
         try:
             opcao = int(input("Digite uma opção: "))
-            print("\n")
             if (opcao < 1 or opcao > 3):
                 raise VerificaError
             return opcao
@@ -124,7 +184,7 @@ def opcoes():
     opcao = menu_opçoes() # Feito
     match opcao:
         case 1:
-            produtoscadastro() #Separar em def's e fazer tratamento de erros
+            produtoscadastro() #Feito
         case 2:
             produtos()
         case 3:
