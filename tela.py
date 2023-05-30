@@ -13,7 +13,6 @@ quantidade_agua = []
 tempo_desenvolvimento = []
 
 #Funções
-
 def hora():
     nome = input("Digite seu nome: ")
     hora= datetime.datetime.now()
@@ -24,14 +23,19 @@ def hora():
     else:
         print("Boa noite {nome} !! \nComo posso ajudar hoje ? \n") 
 
-#Funções de produtos cadastro 
+def busca(cont, escolha):
+    for item in cont:
+        if item == escolha:
+            return True
+    return False
 
+#Funções de produtos cadastro 
 
 def cadastrar_cultivar():
     cultivar = input("Digite o nome da semente para cultivo: ")
+    cultivar = cultivar.upper()
     nome_cultivar.append(cultivar)
     return cultivar
-
 
 def cadastrar_temperatura(cultivar):
     while True:
@@ -41,7 +45,6 @@ def cadastrar_temperatura(cultivar):
             break
         except ValueError:
             print("ERRO: O valor informado não é um número ou contem valores errados (EX: 20)\n")
-
 
 def cadastrar_luz():
     print("\n")
@@ -159,9 +162,55 @@ def produtoscadastro():
     # Adicionar tudo que o usuario cadastrar para a cupula 
 
 #Funções de produtos
+
+def escolha_final(cont, escolha, roda):
+    roda = True
+    while (roda):
+        if busca(cont,escolha):
+            print(f"Ligar capsula para: {nome_cultivar[escolha-1]} ?")
+            final = input("Sim ou Não: ")
+            print("\n")
+            final = final.upper()
+
+            if (final == "SIM"):
+                print("Ativando capsula")
+                break
+            elif(final == "NÃO" or final == "NAO"):
+                print("Voltando ao menu principal \n")
+                opcoes()
+                break
+            else:
+                raise VerificaError
+
 def produtos():
-    print("Funcionando")
+    roda = True
+    while roda:
+        try:
+            soma = 1
+            cont = [1]
+            for i in range(len(nome_cultivar)):
+                print(f"{cont[i]}- {nome_cultivar[i]} \n - Temperatura: {temperatura_ideal[i]}\n - Luz: {luz_ideal[i]}\n - Água: {quantidade_agua[i]}\n - Tempo: {tempo_desenvolvimento[i]}")
+                soma += 1
+                cont.append(soma)
+                print("\n")
+        
+                escolha = int(input("Escolha um produto para ativar a capsula: "))
+                print("\n")
+
+            escolha_final(cont, escolha, roda)
+            break
+        except IndexError:
+            print("ERRO: Escolha os produtos exibidos em tela \n")
+        except ValueError:
+            print("Digite apenas números \n")
+        except VerificaError:
+            print("Digite apenas Sim ou Não \n")
+            escolha_final(cont, escolha, roda)
+            break
+
     #Fazer lista de produtos adicionados, e caso não tenha nada, exibir 
+
+
 
 
 #Funções opções
@@ -172,6 +221,7 @@ def menu_opçoes():
     while True:
         try:
             opcao = int(input("Digite uma opção: "))
+            print("\n")
             if (opcao < 1 or opcao > 3):
                 raise VerificaError
             return opcao
@@ -196,9 +246,8 @@ def opcoes():
 # Parte principal
 def menu():
     print("BEM VINDO(A) A \n")#COLOCAR O NOME DA CUPULA
-
     hora()
-
     opcoes()
+
 
 menu()
