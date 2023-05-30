@@ -124,11 +124,15 @@ def cadastrar_tempo(cultivar):
                 while True:
                     try:
                         desenvolvimento = int(input("Quantos meses serão necessários: "))
+                        if (desenvolvimento < 0 or desenvolvimento > 12):
+                            raise VerificaError
                         print("\n")
                         desenvolvimento = f"{desenvolvimento} mês(es)"
                         break
                     except ValueError:
                         print("ERRO: O valor informado não é um número \n")
+                    except VerificaError:
+                        print("ERRO: Digite os meses entre 1 e 12 \n")
             elif tempo == 3:
                 while True:
                     try:
@@ -148,15 +152,13 @@ def cadastrar_tempo(cultivar):
 
 def produtoscadastro():
     print("\n")
-    while True:
-        cultivar = cadastrar_cultivar()
-        cadastrar_temperatura(cultivar)
-        cadastrar_luz()
-        cadastrar_agua()
-        cadastrar_tempo(cultivar)
-        
-        print("O produto foi cadastrado com sucesso ! \nAcesse-o(a) na opção (2- Produtos) e ative a cúpula \n")
-        break
+    cultivar = cadastrar_cultivar()
+    cadastrar_temperatura(cultivar)
+    cadastrar_luz()
+    cadastrar_agua()
+    cadastrar_tempo(cultivar)
+    
+    print("O produto foi cadastrado com sucesso ! \nAcesse-o(a) na opção (2- Produtos) e ative a cúpula \n")
     opcoes()
 
     # Adicionar tudo que o usuario cadastrar para a cupula 
@@ -183,30 +185,37 @@ def escolha_final(cont, escolha, roda):
                 raise VerificaError
 
 def produtos():
-    roda = True
-    while roda:
-        try:
-            soma = 1
-            cont = [1]
-            for i in range(len(nome_cultivar)):
-                print(f"{cont[i]}- {nome_cultivar[i]} \n - Temperatura: {temperatura_ideal[i]}\n - Luz: {luz_ideal[i]}\n - Água: {quantidade_agua[i]}\n - Tempo: {tempo_desenvolvimento[i]}")
-                soma += 1
-                cont.append(soma)
+    if (len(nome_cultivar) == 0):
+        print("Não há produtos cadastrados, adicione-os em (1- Cadastro de produtos) \n")
+        opcoes()
+    else:
+        roda = True
+        while roda:
+            try:
+                soma = 1
+                cont = [1]
+                for i in range(len(nome_cultivar)):
+                    print(f"{cont[i]}- {nome_cultivar[i]} \n - Temperatura: {temperatura_ideal[i]}\n - Luz: {luz_ideal[i]}\n - Água: {quantidade_agua[i]}\n - Tempo: {tempo_desenvolvimento[i]}")
+                    soma += 1
+                    cont.append(soma)
+                    print("\n")
+            
+                escolha = int(input("Escolha um produto para ativar a capsula (Digite 0 para voltar ao menu principal): "))
                 print("\n")
-        
-                escolha = int(input("Escolha um produto para ativar a capsula: "))
-                print("\n")
+                if (escolha == 0):
+                    opcoes()
+                    break
 
-            escolha_final(cont, escolha, roda)
-            break
-        except IndexError:
-            print("ERRO: Escolha os produtos exibidos em tela \n")
-        except ValueError:
-            print("Digite apenas números \n")
-        except VerificaError:
-            print("Digite apenas Sim ou Não \n")
-            escolha_final(cont, escolha, roda)
-            break
+                escolha_final(cont, escolha, roda)
+                break
+            except IndexError:
+                print("ERRO: Escolha os produtos exibidos em tela \n")
+            except ValueError:
+                print("Digite apenas números \n")
+            except VerificaError:
+                print("Digite apenas Sim ou Não \n")
+                escolha_final(cont, escolha, roda)
+                break
 
     #Fazer lista de produtos adicionados, e caso não tenha nada, exibir 
 
@@ -215,13 +224,13 @@ def produtos():
 
 #Funções opções
 def menu_opçoes():
-    print("1- Cadastro de produtos")
-    print("2- Produtos")
-    print("3- Encerrar cúpula \n")
+    print("MENU PRINCIPAL")
+    print(" 1- Cadastro de produtos")
+    print(" 2- Produtos")
+    print(" 3- Encerrar cúpula \n")
     while True:
         try:
             opcao = int(input("Digite uma opção: "))
-            print("\n")
             if (opcao < 1 or opcao > 3):
                 raise VerificaError
             return opcao
