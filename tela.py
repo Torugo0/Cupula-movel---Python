@@ -19,7 +19,7 @@ def hora():
     if (hora.hour >= 4 and hora.hour < 12):
         print(f"Bom dia {nome} !! \nComo posso ajudar hoje ? \n")
     elif (hora.hour > 12 and hora.hour <=18):
-         print(f"Bom tarde {nome} !! \nComo posso ajudar hoje ? \n")
+         print(f"Boa tarde {nome} !! \nComo posso ajudar hoje ? \n")
     else:
         print("Boa noite {nome} !! \nComo posso ajudar hoje ? \n") 
 
@@ -175,7 +175,7 @@ def escolha_final(cont, escolha, roda):
             final = final.upper()
 
             if (final == "SIM"):
-                print("Ativando capsula")
+                print("Ativando cúpula")
                 break
             elif(final == "NÃO" or final == "NAO"):
                 print("Voltando ao menu principal \n")
@@ -209,7 +209,7 @@ def produtos():
                 escolha_final(cont, escolha, roda)
                 break
             except IndexError:
-                print("ERRO: Escolha os produtos exibidos em tela \n")
+                print("ERRO: Escolha os produtos exibidos em tela ou os adicione em (1- Cadastro de produtos)\n")
             except ValueError:
                 print("Digite apenas números \n")
             except VerificaError:
@@ -217,8 +217,71 @@ def produtos():
                 escolha_final(cont, escolha, roda)
                 break
 
-    #Fazer lista de produtos adicionados, e caso não tenha nada, exibir 
+# Funções para exclusão do produto
 
+def produtosexcluir(escolha):
+    nome_cultivar.pop(escolha-1)
+    temperatura_ideal.pop(escolha-1)
+    luz_ideal.pop(escolha-1)
+    quantidade_agua.pop(escolha-1)
+    tempo_desenvolvimento.pop(escolha-1)
+
+
+
+def excluir_final(cont, escolha, roda):
+    roda = True
+    while (roda):
+        if busca(cont,escolha):
+            print(f"Excluir: {nome_cultivar[escolha-1]} ?")
+            final = input("Sim ou Não: ")
+            print("\n")
+            final = final.upper()
+
+            if (final == "SIM"):
+                print(f"{nome_cultivar[escolha-1]} foi removido com sucesso ! \nVoltando ao menu principal \n")
+                produtosexcluir(escolha)
+                opcoes()
+                break
+            elif(final == "NÃO" or final == "NAO"):
+                print("Voltando ao menu principal \n")
+                opcoes()
+                break
+            else:
+                raise VerificaError
+
+
+def excluirproduto():
+    if (len(nome_cultivar) == 0):
+        print("Não há produtos cadastrados para excluir, adicione-os em (1- Cadastro de produtos) \n")
+        opcoes()
+    else:
+        roda = True
+        while roda:
+            try:
+                soma = 1
+                cont = [1]
+                for i in range(len(nome_cultivar)):
+                    print(f"{cont[i]}- {nome_cultivar[i]} \n - Temperatura: {temperatura_ideal[i]}\n - Luz: {luz_ideal[i]}\n - Água: {quantidade_agua[i]}\n - Tempo: {tempo_desenvolvimento[i]}")
+                    soma += 1
+                    cont.append(soma)
+                    print("\n")
+            
+                escolha = int(input("Escolha um produto para excluir do histórico da cúpula (Digite 0 para voltar ao menu principal): "))
+                print("\n")
+                if (escolha == 0):
+                    opcoes()
+                    break
+
+                excluir_final(cont, escolha, roda)
+                break
+            except IndexError:
+                print("ERRO: Escolha os produtos exibidos em tela ou os adicione em (1- Cadastro de produtos)\n")
+            except ValueError:
+                print("Digite apenas números \n")
+            except VerificaError:
+                print("Digite apenas Sim ou Não \n")
+                excluir_final(cont, escolha, roda)
+                break
 
 
 
@@ -227,11 +290,13 @@ def menu_opçoes():
     print("MENU PRINCIPAL")
     print(" 1- Cadastro de produtos")
     print(" 2- Produtos")
-    print(" 3- Encerrar cúpula \n")
+    print(" 3- Excluir produto")
+    print(" 4- Encerrar cúpula \n")
     while True:
         try:
             opcao = int(input("Digite uma opção: "))
-            if (opcao < 1 or opcao > 3):
+            print("\n")
+            if (opcao < 1 or opcao > 4):
                 raise VerificaError
             return opcao
         except ValueError:
@@ -240,21 +305,21 @@ def menu_opçoes():
             print("ERRO: Digite apenas as opções exibidas \n")
 
 def opcoes():
-    opcao = menu_opçoes() # Feito
+    opcao = menu_opçoes()
     match opcao:
         case 1:
-            produtoscadastro() #Feito
+            produtoscadastro()
         case 2:
             produtos()
         case 3:
+            excluirproduto()
+        case 4:
             print("Cúpula desligada !")
-#Dentro de cada uma delas colocar o false para não entrar em loop infinito
-
 
 
 # Parte principal
 def menu():
-    print("BEM VINDO(A) A \n")#COLOCAR O NOME DA CUPULA
+    print("BEM VINDO(A) A CÚPULA EATABLE GARDEN\n")
     hora()
     opcoes()
 
