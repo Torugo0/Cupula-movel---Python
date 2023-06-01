@@ -15,13 +15,13 @@ tempo_desenvolvimento = []
 #Funções
 def hora():
     nome = input("Digite seu nome: ")
-    hora= datetime.datetime.now()
+    hora = datetime.datetime.now()
     if (hora.hour >= 4 and hora.hour < 12):
         print(f"Bom dia {nome} !! \nComo posso ajudar hoje ? \n")
-    elif (hora.hour > 12 and hora.hour <=18):
+    elif (hora.hour >= 12 and hora.hour <=18):
          print(f"Boa tarde {nome} !! \nComo posso ajudar hoje ? \n")
     else:
-        print("Boa noite {nome} !! \nComo posso ajudar hoje ? \n") 
+        print(f"Boa noite {nome} !! \nComo posso ajudar hoje ? \n") 
 
 def busca(cont, escolha):
     for item in cont:
