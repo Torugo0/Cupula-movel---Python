@@ -161,8 +161,6 @@ def produtoscadastro():
     print("O produto foi cadastrado com sucesso ! \nAcesse-o(a) na opção (2- Produtos) e ative a cúpula \n")
     opcoes()
 
-    # Adicionar tudo que o usuario cadastrar para a cupula 
-
 #Funções de produtos
 
 def escolha_final(cont, escolha, roda):
