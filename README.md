@@ -25,6 +25,9 @@ Biblioteca datetime (já inclusa na instalação padrão do Python)
 - A opção de ativar a cúpula permite selecionar uma cultivar cadastrada e simular a ativação da cúpula para esse cultivo.
 - O programa está estruturado em funções para facilitar a organização e reutilização do código.
 
+## Link do vídeo (Youtube)
+https://youtu.be/RoGHQCAmqZU
+
 ## Contato
 Em caso de dúvidas ou problemas, entre em contato com Vitor Hugo pelo teams (rm97758@fiap.com.br).
 
